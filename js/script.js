@@ -1,14 +1,7 @@
 /*
 Treehouse Techdegree:
 FSJS Project 2 - Data Pagination and Filtering
-*/
-
-
-
-/*
-For assistance:
-   Check out the "Project Resources" section of the Instructions tab: https://teamtreehouse.com/projects/data-pagination-and-filtering#instructions
-   Reach out in your Slack community: https://treehouse-fsjs-102.slack.com/app_redirect?channel=unit-2
+Author: Mathieu Desilets
 */
 
 /*
@@ -16,23 +9,24 @@ Create the `showPage` function
 This function will create and insert/append the elements needed to display a "page" of nine students
 */
 
-function showPage(data, page) {
+function showPage(list, page) {
    const startIndex = (page * 9) - 9;
    const endIndex = page * 9;
    const ul = document.querySelector('ul');
+   ul.innerHTML = '';
    
-   for ( let i = 0; i < data.length; i++ ) {
+   for ( let i = 0; i < list.length; i++ ) {
       if ( i >= startIndex && i < endIndex ) {
          const li = document.createElement('li');
          const divDetail = document.createElement('div');
          const divJoined = document.createElement('div');
          li.className = "student-item cf";
          divDetail.className = "student-details";
-         divDetail.innerHTML = `<img class="avatar" src="${data[i]['picture']['medium']}" alt="Profile Picture">
-                               <h3>${data[i]['name']['first']} ${data[i]['name']['last']}</h3>
-                               <span class="email">${data[i]['email']}</span>`;
+         divDetail.innerHTML = `<img class="avatar" src="${list[i]['picture']['medium']}" alt="Profile Picture">
+                               <h3>${list[i]['name']['first']} ${list[i]['name']['last']}</h3>
+                               <span class="email">${list[i]['email']}</span>`;
          divJoined.className = "joined-details"
-         divJoined.innerHTML = `<span class="date">Joined ${data[i]['registered']['date']}</span>`;
+         divJoined.innerHTML = `<span class="date">Joined ${list[i]['registered']['date']}</span>`;
          li.appendChild(divDetail);
          li.appendChild(divJoined);
          ul.appendChild(li); 
@@ -40,13 +34,49 @@ function showPage(data, page) {
    }
 }
 
-
 /*
 Create the `addPagination` function
 This function will create and insert/append the elements needed for the pagination buttons
 */
 
+function addPagination(list) {
+   const buttonsRequired = Math.ceil( list.length / 9 )
+   const ul = document.querySelectorAll('ul')[1];
+   
+   ul.innerHTML = '';
+
+   for ( let i = 1; i <= buttonsRequired; i++  ) {
+      const li = document.createElement('li');
+      const btn = document.createElement('button');
+      btn.type = 'button';
+      btn.textContent = `${i}`;
+      li.appendChild(btn);
+      ul.appendChild(li);
+   }
+}
 
 
 // Call functions
 showPage(data, 1);
+
+addPagination(data);
+
+
+// Set first button as active
+const firstBtn = document.querySelector('button');
+firstBtn.className = 'active';
+
+// Links buttons logic
+const linksUl = document.querySelector('.link-list');
+const linksBtn = linksUl.querySelectorAll('button');
+
+linksUl.addEventListener('click', (e) => {
+   if ( e.target.type === 'button' ) {
+      for (let i = 0; i < linksBtn.length; i++ ) {
+         linksBtn[i].classList = '';
+      }
+      e.target.className = 'active';
+      const pageNumber = +e.target.textContent;
+      showPage(data, pageNumber);
+   }
+})
