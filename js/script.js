@@ -66,7 +66,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const ul = document.querySelector('ul');
       ul.innerHTML = '';
       
-      // Function used to create the card with user infos
+      // Function used to create the card with user infos (accept an array and an index as parameters)
       function createCard(list, i) {
          const li = document.createElement('li');
          const divDetail = document.createElement('div');
@@ -128,7 +128,6 @@ document.addEventListener('DOMContentLoaded', () => {
             showPage(list, pageNumber);
          }
       });
-
    }
 
    // Initial call of the functions to show data on page load
