@@ -720,10 +720,3 @@ const data = [
     },
   },
 ];
-
-const fullnames = [];
-
-for ( let i = 0; i < data.length; i++ ) {
-  const fullname = `${data[i]['name']['first']} ${data[i]['name']['last']}`
-  fullnames.push(fullname);
-}

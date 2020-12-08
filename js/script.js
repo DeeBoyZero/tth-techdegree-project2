@@ -23,7 +23,7 @@ document.addEventListener('DOMContentLoaded', () => {
    headerLabel.appendChild(input);
    headerLabel.appendChild(button);
    header.appendChild(headerLabel);
-   
+
    /*
    Create the `showPage` function
    This function will create and insert/append the elements needed to display a "page" of nine students
@@ -73,32 +73,89 @@ document.addEventListener('DOMContentLoaded', () => {
          li.appendChild(btn);
          ul.appendChild(li);
       }
-   }
 
+      // Set first button as active
+      const firstBtn = document.querySelector('li button');
+      if( firstBtn ) {
+         firstBtn.className = 'active';
+      }
+
+
+      // Links buttons logic
+      const linksUl = document.querySelector('.link-list');
+      const linksBtn = linksUl.querySelectorAll('li button');
+
+      linksUl.addEventListener('click', (e) => {
+         if ( e.target.type === 'button' ) {
+            for (let i = 0; i < linksBtn.length; i++ ) {
+               linksBtn[i].classList = '';
+            }
+            e.target.className = 'active';
+            const pageNumber = +e.target.textContent;
+            showPage(list, pageNumber);
+         }
+      });
+
+   }
 
    // Call functions
    showPage(data, 1);
 
    addPagination(data);
 
+   // Search Bar logic starts here
 
-   // Set first button as active
-   const firstBtn = document.querySelector('button');
-   firstBtn.className = 'active';
-
-   // Links buttons logic
-   const linksUl = document.querySelector('.link-list');
-   const linksBtn = linksUl.querySelectorAll('button');
-
-   linksUl.addEventListener('click', (e) => {
-      if ( e.target.type === 'button' ) {
-         for (let i = 0; i < linksBtn.length; i++ ) {
-            linksBtn[i].classList = '';
+   function searchFunction() {
+      const inputValue = input.value;
+      const searchStudents = [];
+      
+      for ( let i = 0; i < data.length; i++ ) {
+         if ( data[i].name.first.indexOf(inputValue) !== -1 || data[i].name.last.indexOf(inputValue) !== -1 ) {
+            searchStudents.push(data[i]);
          }
-         e.target.className = 'active';
-         const pageNumber = +e.target.textContent;
-         showPage(data, pageNumber);
+         if ( searchStudents.length > 0 ) {
+            showPage(searchStudents, 1);
+         } else {
+            const ul = document.querySelector('ul');
+            ul.innerHTML = `<h1>No result found.<h1>`;
+         }
+         addPagination(searchStudents);
       }
+   }
+
+
+   button.addEventListener('click', () => {
+      // const inputValue = input.value;
+      // const searchStudents = [];
+      
+      // for ( let i = 0; i < data.length; i++ ) {
+      //    if ( data[i].name.first.indexOf(inputValue) !== -1 || data[i].name.last.indexOf(inputValue) !== -1 ) {
+      //       searchStudents.push(data[i]);
+      //    }
+      //    if ( searchStudents.length > 0 ) {
+      //       showPage(searchStudents, 1);
+      //    } else {
+      //       const ul = document.querySelector('ul');
+      //       ul.innerHTML = `<h1>No result found.<h1>`;
+      //    }
+      //    addPagination(searchStudents);
+      // }
+      searchFunction();
    });
+
+   input.addEventListener('keyup', () => {
+      // const inputValue = input.value;
+      // const searchStudents = [];
+      
+      // for ( let i = 0; i < data.length; i++ ) {
+      //    if ( data[i].name.first.indexOf(inputValue) !== -1 || data[i].name.last.indexOf(inputValue) !== -1 ) {
+      //       searchStudents.push(data[i]);
+      //    }
+      //    showPage(searchStudents, 1);
+      //    addPagination(searchStudents);
+      // }
+      searchFunction();
+   });
+
 
 });
