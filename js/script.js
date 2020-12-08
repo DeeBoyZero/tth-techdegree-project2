@@ -24,6 +24,33 @@ document.addEventListener('DOMContentLoaded', () => {
    headerLabel.appendChild(button);
    header.appendChild(headerLabel);
 
+   // Search Bar logic starts here
+   function searchFunction() {
+      const inputValue = input.value;
+      const searchStudents = [];
+      
+      for ( let i = 0; i < data.length; i++ ) {
+         if ( data[i].name.first.indexOf(inputValue) !== -1 || data[i].name.last.indexOf(inputValue) !== -1 ) {
+            searchStudents.push(data[i]);
+         }
+         if ( searchStudents.length > 0 ) {
+            showPage(searchStudents, 1);
+         } else {
+            const ul = document.querySelector('ul');
+            ul.innerHTML = `<h1>No results found.<h1>`;
+         }
+         addPagination(searchStudents);
+      }
+   }
+
+   button.addEventListener('click', () => {
+      searchFunction();
+   });
+
+   input.addEventListener('keyup', () => {
+      searchFunction();
+   });
+   
    /*
    Create the `showPage` function
    This function will create and insert/append the elements needed to display a "page" of nine students
@@ -42,11 +69,11 @@ document.addEventListener('DOMContentLoaded', () => {
             const divJoined = document.createElement('div');
             li.className = "student-item cf";
             divDetail.className = "student-details";
-            divDetail.innerHTML = `<img class="avatar" src="${list[i]['picture']['medium']}" alt="Profile Picture">
-                                 <h3>${list[i]['name']['first']} ${list[i]['name']['last']}</h3>
-                                 <span class="email">${list[i]['email']}</span>`;
+            divDetail.innerHTML = `<img class="avatar" src="${list[i].picture.medium}" alt="Profile Picture">
+                                 <h3>${list[i].name.first} ${list[i].name.last}</h3>
+                                 <span class="email">${list[i].email}</span>`;
             divJoined.className = "joined-details"
-            divJoined.innerHTML = `<span class="date">Joined ${list[i]['registered']['date']}</span>`;
+            divJoined.innerHTML = `<span class="date">Joined ${list[i].registered.date}</span>`;
             li.appendChild(divDetail);
             li.appendChild(divJoined);
             ul.appendChild(li); 
@@ -80,7 +107,6 @@ document.addEventListener('DOMContentLoaded', () => {
          firstBtn.className = 'active';
       }
 
-
       // Links buttons logic
       const linksUl = document.querySelector('.link-list');
       const linksBtn = linksUl.querySelectorAll('li button');
@@ -102,35 +128,5 @@ document.addEventListener('DOMContentLoaded', () => {
    showPage(data, 1);
 
    addPagination(data);
-
-   // Search Bar logic starts here
-
-   function searchFunction() {
-      const inputValue = input.value;
-      const searchStudents = [];
-      
-      for ( let i = 0; i < data.length; i++ ) {
-         if ( data[i].name.first.indexOf(inputValue) !== -1 || data[i].name.last.indexOf(inputValue) !== -1 ) {
-            searchStudents.push(data[i]);
-         }
-         if ( searchStudents.length > 0 ) {
-            showPage(searchStudents, 1);
-         } else {
-            const ul = document.querySelector('ul');
-            ul.innerHTML = `<h1>No result found.<h1>`;
-         }
-         addPagination(searchStudents);
-      }
-   }
-
-
-   button.addEventListener('click', () => {
-      searchFunction();
-   });
-
-   input.addEventListener('keyup', () => {
-      searchFunction();
-   });
-
 
 });
