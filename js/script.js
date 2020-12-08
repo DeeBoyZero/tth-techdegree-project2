@@ -125,35 +125,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
 
    button.addEventListener('click', () => {
-      // const inputValue = input.value;
-      // const searchStudents = [];
-      
-      // for ( let i = 0; i < data.length; i++ ) {
-      //    if ( data[i].name.first.indexOf(inputValue) !== -1 || data[i].name.last.indexOf(inputValue) !== -1 ) {
-      //       searchStudents.push(data[i]);
-      //    }
-      //    if ( searchStudents.length > 0 ) {
-      //       showPage(searchStudents, 1);
-      //    } else {
-      //       const ul = document.querySelector('ul');
-      //       ul.innerHTML = `<h1>No result found.<h1>`;
-      //    }
-      //    addPagination(searchStudents);
-      // }
       searchFunction();
    });
 
    input.addEventListener('keyup', () => {
-      // const inputValue = input.value;
-      // const searchStudents = [];
-      
-      // for ( let i = 0; i < data.length; i++ ) {
-      //    if ( data[i].name.first.indexOf(inputValue) !== -1 || data[i].name.last.indexOf(inputValue) !== -1 ) {
-      //       searchStudents.push(data[i]);
-      //    }
-      //    showPage(searchStudents, 1);
-      //    addPagination(searchStudents);
-      // }
       searchFunction();
    });
 
